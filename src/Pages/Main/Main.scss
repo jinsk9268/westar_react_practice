@@ -21,11 +21,11 @@ nav {
     padding: 9.5px 0px;
 }
 
-.img-logo {
+.nav-img-logo {
     padding: 5px 10px 5px 0px;
 }
 
-.text-logo{
+.nav-text-logo {
     padding-left: 11.5px;
     border-left: 1.5px solid black;
 }
@@ -51,11 +51,17 @@ nav {
     border-radius: 3px;
     border: 1px solid #dbdbdb;
     background-color: #fafafa;
+
+    &::placeholder {
+        text-align: center;
+    }
 }
 
+/* nesting 활용
 .input-text::placeholder {
     text-align: center;
 }
+*/
 
 .nav-icon {
     width: 360px;
@@ -150,13 +156,21 @@ article {
 .a-b-icon {
     margin-right: 12px;
     height: 24px;
+
+    &.a-b-icon.bookmark {
+        position: absolute;
+        margin-right: 0px;
+        right: 16px;
+    }
 }
 
+/* nesting 활용
 .a-b-icon.bookmark {
     position: absolute;
     margin-right: 0px;
     right: 16px;
 }
+*/
 
 .arti-bottom-2 {
     height: 40px;
@@ -238,6 +252,7 @@ time {
     overflow: hidden;
 }
 
+/*main의 button 태그인데 login의 css 속성 받음*/ 
 .a-c-i-button {
     border: 0px;
     background-color: #FFFFFF;

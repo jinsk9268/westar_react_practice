@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 // 연동시킬려면 import
-import Login from "./Login/Login";
-//import Main from "./Main/Main";
+//import Login from "./Pages/Login/Login";
+//import Main from "./Pages/Main/Main";
+import Routes from "./Routes"
 
 
 ReactDOM.render(
-    <Login /> ,
-    //<Main /> ,
+  //<Login />,
+  //<Main />,
+  <Routes />,
   document.getElementById('root')
 );
+
 
