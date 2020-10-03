@@ -51,6 +51,19 @@ class MainSubject extends React.Component {
         // let inputWord = this.state.inputComment;
         // inputArr.push(inputWord)
         // this.setState({inputCommentUp: inputArr})
+
+        // 댓글
+        fetch("http://10.58.6.117:8001/comments", {
+            method: "POST",
+            //댓글 구현 headers 필요
+            headers: {
+                Authorization: localStorage.getItem("access_token") // 예시, 댓글구현할때, 키는 항상 고정
+            },
+            body: JSON.stringify({
+                comment: this.state.inputComment
+            })
+        })
+        .then(res => console.log(res)) // 요청 확인하기 위한 콘솔
         
         this.setState({
             inputCommentUp: this.state.inputCommentUp.concat(this.state.inputComment)

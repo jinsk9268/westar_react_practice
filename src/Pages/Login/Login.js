@@ -18,6 +18,24 @@ class Login extends React.Component {
         };
     }
 
+    // 백엔드에서 요청한 대로 보내주기, 회원가입
+    // fetch('api 주소', {
+    //     method: 'post',
+    //     body: JSON.stringify({
+    //         email: this.state.userInputId // 벨류로 주기, 백엔드에 있는 아이디 값으로 설정해줘야 하므로
+    //         password: this.state.userInputPw
+    //     })
+    // }) 
+    // .then(res => Response.json())
+    // .then(res => {
+    //     if (res.success) {
+    //         alert('저장완료')
+    //     }
+    // })
+
+    // 로그인할때 http통신 이해 필요 access token
+    // 실습할때는 로컬스토리지, 세션스토리지 사용
+
     changeHandlerId = (e) => {
         console.log(e.target.name, " : ", e.target.value);
         //input 태그에 name속성 state key와 똑같이 부여해서 []안에 넣어줘도됨
@@ -38,6 +56,7 @@ class Login extends React.Component {
                 : "login-button falseColor"
     }
 
+    // 메인 이동
     goToMainup() {
         //this.props.history.push('/main');
         if (this.state.btnChangeId && this.state.btnChangePw && this.state.idCheck) {
@@ -47,7 +66,36 @@ class Login extends React.Component {
         } 
     }
 
+    //확인용
+    checkUserInfo = () => {
+        console.log(this.state)
+        //post
+        fetch("http://10.58.6.117:8001/users/log-in", {
+            method: "POST",
+            //로그인후 인증된 회원만 할 수 있는 프라이빗한 활동할때 필요 , 회원가입할때는 headers 없어도됨
+            headers: {
+                Authorization: localStorage.getItem("access_token") // 예시, 댓글구현할때, 키는 항상 고정
+            },
+            body: JSON.stringify({
+                username: this.state.userInputId, //키는 백엔드에서 요구하는 키값으로 적어야, 벨류는 내가 보낼 정보
+                password: this.state.userInputPw
+            })
+        })
+        .then(res => res.json()) //JSON js 로 변환
+        // .then(res => console.log(res)) // 콘솔에 정보 나오는지 확인
+        .then(res=> localStorage.setItem("access_token", res.token)) //토큰 어플리케이션에 저장할때
+        // .then(res => { // 로그인 해본거
+        //     if(res) {
+        //         this.props.history.push('/main');
+        //     }
+        // })
+        // access_token: res.token
+        // 조건걸어서 확인해보기
+        this.props.history.push('/main');
+    }
+
     render() {
+        // console.log(this.state) 이거로도 확인 가능 state 전체 확인 가능
         return (
             <div className="body-css">
                 <main className="login-container">
@@ -70,8 +118,12 @@ class Login extends React.Component {
                     />
                     
                     <button 
-                        className={this.changeHandlerBgColor()}
-                        onClick={this.goToMainup.bind(this)}
+                        className={this.changeHandlerBgColor()} 
+                        //onClick={this.goToMainup.bind(this)} main넘어가는거 일단 지우기
+                        onClick={this.checkUserInfo}
+                        // onClick 이벤트로  백엔드에 데이터 넘기기 api 요청
+                        // post로 할때는 js를 json으로 json은 스트링이므로 stringify씀
+                        // main에 연결한거 일단 해제하기
                     >
                         로그인
                     </button>
